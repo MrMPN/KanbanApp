@@ -2,4 +2,8 @@
     <string name="app_name">Kanban App</string>
     <string name="explore">Explore</string>
     <string name="local">Local</string>
+    <string name="backlog">Backlog</string>
+    <string name="next">Next</string>
+    <string name="doing">Doing</string>
+    <string name="done">Done</string>
 </resources>

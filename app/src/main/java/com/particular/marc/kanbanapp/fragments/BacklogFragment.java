@@ -1,4 +1,4 @@
-package com.particular.marc.kanbanapp;
+package com.particular.marc.kanbanapp.fragments;
 
 
 import android.os.Bundle;
@@ -7,16 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.particular.marc.kanbanapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * This fragment displays the list of repositories the user has opened a Kanban board for.
- * The user can click the "Local" tab or slide to get into this fragment
+ * This will be the initial fragment the user will see when clicking on a repository.
+ * Displays a recyclerView with the list of backlog issues (default state when newly created)
  */
-public class LocalFragment extends Fragment {
+public class BacklogFragment extends Fragment {
 
 
-    public LocalFragment() {
+    public BacklogFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +26,7 @@ public class LocalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_local, container, false);
+        return inflater.inflate(R.layout.fragment_base, container, false);
     }
 
 }

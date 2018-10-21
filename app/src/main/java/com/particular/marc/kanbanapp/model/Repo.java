@@ -6,6 +6,6 @@ import android.arch.persistence.room.Entity;
  * Class that represents a repository.
  * Both Room and Retrofit will use it
  */
-@Entity
+@Entity(tableName = "repo")
 public class Repo {
 }

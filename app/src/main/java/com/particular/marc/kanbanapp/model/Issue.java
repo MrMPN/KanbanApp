@@ -6,6 +6,6 @@ import android.arch.persistence.room.Entity;
  * A class that represents the issues of a given repository.
  * Both Room and Retrofit will use it
  */
-@Entity
+@Entity(tableName = "issue")
 public class Issue {
 }

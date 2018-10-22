@@ -15,6 +15,7 @@ import com.particular.marc.kanbanapp.model.Repo;
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
     public abstract RepoDao repoDao();
+    public abstract IssueDao issueDao();
 
     public static synchronized AppDatabase getInstance(final Context context){
         if (instance == null) {

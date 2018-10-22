@@ -1,9 +1,11 @@
 package com.particular.marc.kanbanapp.repository;
 
 import android.arch.paging.PagedList.BoundaryCallback;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.particular.marc.kanbanapp.database.AppDatabase;
 import com.particular.marc.kanbanapp.database.RepoDao;
 import com.particular.marc.kanbanapp.helper.AppExecutors;
 import com.particular.marc.kanbanapp.model.Repo;
@@ -25,9 +27,10 @@ public class CustomBoundaryCallback extends BoundaryCallback<Repo> {
     private boolean isRequestInProgress = false;
 
 
-    CustomBoundaryCallback(RepoDao repoDao) {
+    CustomBoundaryCallback(Context context) {
         super();
-        this.repoDao = repoDao;
+        AppDatabase db = AppDatabase.getInstance(context.getApplicationContext());
+        repoDao = db.repoDao();
         mExecutors = AppExecutors.getInstance();
         service = RetrofitClient.getRetrofitInstance().create(ApiRequest.class);
     }

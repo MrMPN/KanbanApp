@@ -48,11 +48,12 @@ public class RepoRepository {
         AppDatabase db = AppDatabase.getInstance(application.getApplicationContext());
         repoDao = db.repoDao();
         issueDao = db.issueDao();
-        localReposList = new LivePagedListBuilder<>(repoDao.getAllLocalRepos(), 30)
+        localReposList = new LivePagedListBuilder<>(
+                repoDao.getAllLocalRepos(), 30)
                 .build();
         reposList = new LivePagedListBuilder<>(
                 repoDao.getAllRepos(), 30)
-                .setBoundaryCallback(new CustomBoundaryCallback(repoDao))
+                .setBoundaryCallback(new CustomBoundaryCallback(application))
                 .build();
     }
 

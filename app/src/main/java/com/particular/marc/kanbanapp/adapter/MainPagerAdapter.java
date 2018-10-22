@@ -14,11 +14,11 @@ import com.particular.marc.kanbanapp.fragments.LocalFragment;
  * FragmentPagerAdapter subclass used to populate the MainActivity ViewPager, so the user can
  * swipe between the Local and Explore fragments
  */
-public class MainActivityPagerAdapter extends FragmentPagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
     private final int PAGE_COUNT = 2;
     private Context context;
 
-    public MainActivityPagerAdapter(FragmentManager fm, Context context) {
+    public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }

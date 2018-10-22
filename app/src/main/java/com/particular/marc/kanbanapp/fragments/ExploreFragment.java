@@ -9,12 +9,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.particular.marc.kanbanapp.R;
-import com.particular.marc.kanbanapp.RepoListAdapter;
+import com.particular.marc.kanbanapp.adapter.RepoListAdapter;
+import com.particular.marc.kanbanapp.adapter.RepoListAdapter.ListItemClickListener;
 import com.particular.marc.kanbanapp.model.Repo;
 import com.particular.marc.kanbanapp.viewmodel.MainViewModel;
 
@@ -24,7 +27,7 @@ import com.particular.marc.kanbanapp.viewmodel.MainViewModel;
  * This will be the initial fragment the user will see. It displays a recyclerView with the list of
  * repositories of a given user
  */
-public class ExploreFragment extends Fragment {
+public class ExploreFragment extends Fragment implements ListItemClickListener {
     private static final String TAG = "ExploreFragment";
     private MainViewModel viewModel;
     private RepoListAdapter adapter;
@@ -45,7 +48,7 @@ public class ExploreFragment extends Fragment {
     private void setRecyclerView(View v){
         RecyclerView recyclerView = v.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RepoListAdapter(getContext(), RepoListAdapter.EXPLORE);
+        adapter = new RepoListAdapter(getContext(), this, RepoListAdapter.EXPLORE);
         recyclerView.setAdapter(adapter);
     }
 
@@ -59,4 +62,22 @@ public class ExploreFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAddListItemClick(Repo clickedItem) {
+        if (!clickedItem.isHasKanban()) {
+            String nameRepo = clickedItem.getFullName().split("/")[1];
+            Log.d(TAG, "makeRepoLocal: " + nameRepo);
+            Toast.makeText(getContext(), "Adding " + nameRepo + " to Local", Toast.LENGTH_SHORT).show();
+            clickedItem.setHasKanban(true);
+            viewModel.makeRepoLocal(clickedItem);
+        }
+        else{
+            Toast.makeText(getContext(), "This repository is already in Local tab", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onListItemClick(Repo clickedItem) {
+        //We do nothing
+    }
 }

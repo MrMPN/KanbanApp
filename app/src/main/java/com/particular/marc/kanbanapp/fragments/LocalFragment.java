@@ -4,6 +4,7 @@ package com.particular.marc.kanbanapp.fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,8 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.particular.marc.kanbanapp.KanbanActivity;
 import com.particular.marc.kanbanapp.R;
-import com.particular.marc.kanbanapp.RepoListAdapter;
+import com.particular.marc.kanbanapp.adapter.RepoListAdapter;
+import com.particular.marc.kanbanapp.adapter.RepoListAdapter.ListItemClickListener;
 import com.particular.marc.kanbanapp.model.Repo;
 import com.particular.marc.kanbanapp.viewmodel.MainViewModel;
 
@@ -24,10 +27,12 @@ import com.particular.marc.kanbanapp.viewmodel.MainViewModel;
  * This fragment displays a recyclerView with the list of repositories the user has opened a Kanban board for.
  * The user can click the "Local" tab or slide to get into this fragment
  */
-public class LocalFragment extends Fragment {
+public class LocalFragment extends Fragment implements ListItemClickListener {
     private static final String TAG = "LocalFragment";
     private MainViewModel viewModel;
     private RepoListAdapter adapter;
+    final public static String REPO_ID = "repoId";
+    final public static String REPO_NAME = "repoName";
 
     public LocalFragment() {
     }
@@ -45,7 +50,7 @@ public class LocalFragment extends Fragment {
     private void setRecyclerView(View v){
         RecyclerView recyclerView = v.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RepoListAdapter(getContext(), RepoListAdapter.LOCAL);
+        adapter = new RepoListAdapter(getContext(), this, RepoListAdapter.LOCAL);
         recyclerView.setAdapter(adapter);
     }
 
@@ -59,4 +64,17 @@ public class LocalFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAddListItemClick(Repo clickedItem) {
+        //We do nothing
+    }
+
+    @Override
+    public void onListItemClick(Repo clickedItem) {
+        Intent intent = new Intent(getContext(), KanbanActivity.class);
+        String [] processedName = clickedItem.getFullName().split("/");
+        intent.putExtra(REPO_ID, clickedItem.getId());
+        intent.putExtra(REPO_NAME, processedName[1]);
+        getContext().startActivity(intent);
+    }
 }

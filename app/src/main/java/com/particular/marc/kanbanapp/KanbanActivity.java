@@ -5,6 +5,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.particular.marc.kanbanapp.adapter.KanbanPagerAdapter;
+
 public class KanbanActivity extends AppCompatActivity {
 
     @Override

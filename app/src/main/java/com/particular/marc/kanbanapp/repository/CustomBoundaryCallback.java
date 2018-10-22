@@ -24,6 +24,7 @@ public class CustomBoundaryCallback extends BoundaryCallback<Repo> {
     private ApiRequest service;
     private RepoDao repoDao;
     private int lastRequestedPage = 0;
+    private int requestPerPage = 50;
     private boolean isRequestInProgress = false;
 
 
@@ -63,7 +64,7 @@ public class CustomBoundaryCallback extends BoundaryCallback<Repo> {
     private void requestData(){
         if (isRequestInProgress) return;
         isRequestInProgress = true;
-        Call<List<Repo>> call = service.getAllRepos(lastRequestedPage+1, 30);
+        Call<List<Repo>> call = service.getAllRepos(lastRequestedPage+1, requestPerPage);
         call.enqueue(new Callback<List<Repo>>() {
             @Override
             public void onResponse(Call<List<Repo>> call, final Response<List<Repo>> response) {

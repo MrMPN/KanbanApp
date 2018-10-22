@@ -74,7 +74,7 @@ public class RepoRepository {
             @Override
             public void onResponse(Call<List<Issue>> call, Response<List<Issue>> response) {
                 if (response.isSuccessful()){
-                    Log.d(TAG, "onResponse: fetchIssuesList");
+                    Log.d(TAG, "onResponse:");
                     insertIssues(response.body(), repo.getId());
                 }
             }

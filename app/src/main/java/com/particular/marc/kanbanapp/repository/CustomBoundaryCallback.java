@@ -18,20 +18,20 @@ import retrofit2.Response;
 
 public class CustomBoundaryCallback extends BoundaryCallback<Repo> {
     private static final String TAG = "CustomBoundaryCallback";
-    private AppExecutors mExecutors = AppExecutors.getInstance();
+    private AppExecutors mExecutors;
     private ApiRequest service;
     private RepoDao repoDao;
-
+    private int lastRequestedPage = 0;
+    private boolean isRequestInProgress = false;
 
 
     CustomBoundaryCallback(RepoDao repoDao) {
         super();
         this.repoDao = repoDao;
+        mExecutors = AppExecutors.getInstance();
         service = RetrofitClient.getRetrofitInstance().create(ApiRequest.class);
     }
 
-    private int lastRequestedPage = 0;
-    private boolean isRequestInProgress = false;
     /**
      * Database returned 0 items, we should query the server, get results
      * and insert them into the db
@@ -40,7 +40,7 @@ public class CustomBoundaryCallback extends BoundaryCallback<Repo> {
     public void onZeroItemsLoaded() {
         Log.d(TAG, "onZeroItemsLoaded: ");
         super.onZeroItemsLoaded();
-        requestAndSaveData();
+        requestData();
     }
 
     /**
@@ -54,35 +54,36 @@ public class CustomBoundaryCallback extends BoundaryCallback<Repo> {
         Log.d(TAG, "onItemAtEndLoaded: ");
         super.onItemAtEndLoaded(itemAtEnd);
         lastRequestedPage = itemAtEnd.getLastPage();
-        requestAndSaveData();
+        requestData();
     }
 
-    private void requestAndSaveData(){
+    private void requestData(){
         if (isRequestInProgress) return;
         isRequestInProgress = true;
-        Log.d(TAG, "requestAndSaveData: Page" + (lastRequestedPage+1));
         Call<List<Repo>> call = service.getAllRepos(lastRequestedPage+1, 30);
         call.enqueue(new Callback<List<Repo>>() {
             @Override
             public void onResponse(Call<List<Repo>> call, final Response<List<Repo>> response) {
                 if (response.isSuccessful()){
-                    mExecutors.diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Log.d(TAG, "run: " + response.headers().get("Link"));
-                            if (response.body().size() > 0){
-                                response.body().get(response.body().size()-1).setLastPage(lastRequestedPage+1);
-                                repoDao.insert(response.body());
-                            }
-                            isRequestInProgress = false;
-                        }
-                    });
-
+                   saveData(response.body());
                 }
             }
             @Override
             public void onFailure(Call<List<Repo>> call, Throwable t) {
                 Log.d(TAG, "onFailure: " +t.getLocalizedMessage());
+                isRequestInProgress = false;
+            }
+        });
+    }
+
+    private void saveData(final List<Repo> repos){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (repos.size() > 0){
+                    repos.get(repos.size()-1).setLastPage(lastRequestedPage+1);
+                    repoDao.insert(repos);
+                }
                 isRequestInProgress = false;
             }
         });

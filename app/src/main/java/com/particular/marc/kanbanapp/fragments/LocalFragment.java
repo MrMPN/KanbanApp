@@ -1,8 +1,11 @@
 package com.particular.marc.kanbanapp.fragments;
 
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.particular.marc.kanbanapp.R;
 import com.particular.marc.kanbanapp.RepoListAdapter;
+import com.particular.marc.kanbanapp.model.Repo;
 import com.particular.marc.kanbanapp.viewmodel.MainViewModel;
 
 
@@ -47,6 +51,12 @@ public class LocalFragment extends Fragment {
 
     private void initViewModel(){
         viewModel = ViewModelProviders.of(getActivity()).get(MainViewModel.class);
+        viewModel.getLocalRepos().observe(getViewLifecycleOwner(), new Observer<PagedList<Repo>>() {
+            @Override
+            public void onChanged(@Nullable PagedList<Repo> repos) {
+                adapter.submitList(repos);
+            }
+        });
     }
 
 }

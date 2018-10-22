@@ -27,4 +27,6 @@ public interface RepoDao {
     @Query("SELECT * FROM repo ORDER BY full_name COLLATE NOCASE")
     DataSource.Factory<Integer, Repo> getAllRepos();
 
+    @Query("SELECT * FROM repo WHERE has_kanban = 1 ORDER BY full_name COLLATE NOCASE")
+    DataSource.Factory<Integer, Repo> getAllLocalRepos();
 }

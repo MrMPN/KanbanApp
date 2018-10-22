@@ -1,8 +1,8 @@
 package com.particular.marc.kanbanapp.adapter;
 
-import android.arch.paging.PagedListAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.util.DiffUtil.ItemCallback;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.particular.marc.kanbanapp.R;
+import com.particular.marc.kanbanapp.adapter.KanbanListAdapter.ViewHolder;
 import com.particular.marc.kanbanapp.model.Issue;
 
 /**
  * PagedListAdapter that will take a PagedList and display it into the RecyclerView
  */
-public class KanbanListAdapter extends PagedListAdapter<Issue, KanbanListAdapter.ViewHolder> {
+public class KanbanListAdapter extends ListAdapter<Issue, ViewHolder> {
     private static final String TAG = "KanbanListAdapter";
     private LayoutInflater inflater;
     private int board;

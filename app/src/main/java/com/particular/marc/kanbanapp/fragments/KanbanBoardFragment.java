@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.particular.marc.kanbanapp.R;
 import com.particular.marc.kanbanapp.adapter.KanbanListAdapter;
+import com.particular.marc.kanbanapp.adapter.KanbanListAdapter.ListItemClickListener;
 import com.particular.marc.kanbanapp.model.Issue;
 import com.particular.marc.kanbanapp.viewmodel.KanbanViewModel;
 
@@ -24,7 +25,7 @@ import java.util.List;
  * This will be the initial fragment the user will see when clicking on a repository.
  * Displays a recyclerView with the list of backlog issues (default state when newly created)
  */
-public class KanbanBoardFragment extends Fragment {
+public class KanbanBoardFragment extends Fragment implements ListItemClickListener {
     private static final String TAG = "KanbanBoardFragment";
     private KanbanViewModel viewModel;
     private KanbanListAdapter adapter;
@@ -56,7 +57,7 @@ public class KanbanBoardFragment extends Fragment {
 
     private void setRecyclerView(View v){
         RecyclerView recyclerView = v.findViewById(R.id.list);
-        adapter = new KanbanListAdapter(getContext(), board);
+        adapter = new KanbanListAdapter(getContext(),this, board);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -69,5 +70,27 @@ public class KanbanBoardFragment extends Fragment {
                 adapter.submitList(issues);
             }
         });
+    }
+
+    @Override
+    public void onNextButtonClick(Issue clickedItem) {
+        //If the try fails,that means we tried to get to a 5th board, which doesn't exist
+        try {
+            clickedItem.setBoard(clickedItem.getBoard()+1);
+            viewModel.updateIssue(clickedItem);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onPreviousButtonClick(Issue clickedItem) {
+        //If the try fails,that means we tried to get to board left from backlog, which doesn't exist
+        try {
+            clickedItem.setBoard(clickedItem.getBoard()-1);
+            viewModel.updateIssue(clickedItem);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
 }

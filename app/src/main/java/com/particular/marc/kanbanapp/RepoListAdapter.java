@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.particular.marc.kanbanapp.model.Repo;
@@ -17,10 +18,15 @@ import com.particular.marc.kanbanapp.model.Repo;
  * PagedListAdapter that will take a PagedList and display it into the RecyclerView
  */
 public class RepoListAdapter extends PagedListAdapter<Repo, RepoListAdapter.ViewHolder> {
+    private static final String TAG = "RepoListAdapter";
+    final public static int EXPLORE = 0;
+    final public static int LOCAL = 1;
     private LayoutInflater inflater;
+    private int page;
 
-    public RepoListAdapter(Context context) {
+    public RepoListAdapter(Context context, int page) {
         super(DIFF_CALLBACK);
+        this.page = page;
         inflater = LayoutInflater.from(context);
     }
 
@@ -35,7 +41,9 @@ public class RepoListAdapter extends PagedListAdapter<Repo, RepoListAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Repo repo = getItem(i);
         if (repo != null){
-            viewHolder.titleTextView.setText(repo.getFullName());
+            String[] processed = repo.getFullName().split("/");
+            viewHolder.titleTextView.setText(processed[1]);
+            viewHolder.authorTextView.setText(processed[0]);
         }
     }
 
@@ -54,9 +62,13 @@ public class RepoListAdapter extends PagedListAdapter<Repo, RepoListAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;
+        TextView authorTextView;
+        ImageView addImage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.textView1);
+            titleTextView = itemView.findViewById(R.id.issue_title);
+            authorTextView = itemView.findViewById(R.id.issue_date);
+            addImage = itemView.findViewById(R.id.add_button);
         }
     }
 }

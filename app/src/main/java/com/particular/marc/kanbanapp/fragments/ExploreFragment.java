@@ -45,7 +45,7 @@ public class ExploreFragment extends Fragment {
     private void setRecyclerView(View v){
         RecyclerView recyclerView = v.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RepoListAdapter(getContext());
+        adapter = new RepoListAdapter(getContext(), RepoListAdapter.EXPLORE);
         recyclerView.setAdapter(adapter);
     }
 

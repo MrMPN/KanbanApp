@@ -19,7 +19,6 @@ public class LocalFragment extends Fragment {
 
 
     public LocalFragment() {
-        // Required empty public constructor
     }
 
 

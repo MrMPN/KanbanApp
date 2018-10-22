@@ -11,12 +11,13 @@ import com.particular.marc.kanbanapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Displays a recyclerView with the list of issues in the "Next" board
+ * This will be the initial fragment the user will see when clicking on a repository.
+ * Displays a recyclerView with the list of backlog issues (default state when newly created)
  */
-public class NextFragment extends Fragment {
+public class KanbanBoardFragment extends Fragment {
 
 
-    public NextFragment() {
+    public KanbanBoardFragment() {
         // Required empty public constructor
     }
 

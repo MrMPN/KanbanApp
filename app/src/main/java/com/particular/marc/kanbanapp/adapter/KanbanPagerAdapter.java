@@ -1,22 +1,22 @@
 package com.particular.marc.kanbanapp.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.particular.marc.kanbanapp.R;
-import com.particular.marc.kanbanapp.fragments.BacklogFragment;
-import com.particular.marc.kanbanapp.fragments.DoingFragment;
-import com.particular.marc.kanbanapp.fragments.DoneFragment;
-import com.particular.marc.kanbanapp.fragments.NextFragment;
+import com.particular.marc.kanbanapp.fragments.KanbanBoardFragment;
+import com.particular.marc.kanbanapp.viewmodel.KanbanViewModel;
 
 /**
  * FragmentPagerAdapter subclass used to populate the KanbanActivity ViewPager, so the user can
  * swipe between the Backlog, Next, Doing and Done fragments
  */
 public class KanbanPagerAdapter extends FragmentPagerAdapter {
+    private static final String TAG = "KanbanPagerAdapter";
     private final int PAGE_COUNT = 4;
     private Context context;
 
@@ -29,16 +29,24 @@ public class KanbanPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int i) {
         switch (i){
             case 0:
-                return new BacklogFragment();
+                return fragmentBuilder(KanbanViewModel.BACKLOG);
             case 1:
-                return new NextFragment();
+                return fragmentBuilder(KanbanViewModel.NEXT);
             case 2:
-                return new DoingFragment();
+                return fragmentBuilder(KanbanViewModel.DOING);
             case 3:
-                return new DoneFragment();
+                return fragmentBuilder(KanbanViewModel.DONE);
             default:
                 return null;
         }
+    }
+
+    private KanbanBoardFragment fragmentBuilder(int i){
+        Bundle bundle = new Bundle();
+        KanbanBoardFragment fragment = new KanbanBoardFragment();
+        bundle.putInt("board", i);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -63,4 +71,3 @@ public class KanbanPagerAdapter extends FragmentPagerAdapter {
         }
     }
 }
-

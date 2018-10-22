@@ -8,7 +8,6 @@ import android.arch.paging.PagedList;
 import com.particular.marc.kanbanapp.database.AppDatabase;
 import com.particular.marc.kanbanapp.database.RepoDao;
 import com.particular.marc.kanbanapp.model.Repo;
-import com.particular.marc.kanbanapp.model.RepoAndAllissues;
 import com.particular.marc.kanbanapp.network.ApiRequest;
 import com.particular.marc.kanbanapp.network.RetrofitClient;
 
@@ -22,7 +21,6 @@ public class RepoRepository {
     private RepoDao repoDao;
     private static RepoRepository instance;
     private LiveData<PagedList<Repo>> reposList;
-    private LiveData<PagedList<RepoAndAllissues>> issuesList;
 
     public static synchronized RepoRepository getInstance(Application application){
         if (instance == null){

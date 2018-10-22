@@ -2,11 +2,8 @@ package com.particular.marc.kanbanapp.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
-import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
 
-import com.particular.marc.kanbanapp.model.RepoAndAllissues;
 import com.particular.marc.kanbanapp.repository.RepoRepository;
 
 /**
@@ -16,7 +13,6 @@ import com.particular.marc.kanbanapp.repository.RepoRepository;
  */
 public class KanbanViewModel extends AndroidViewModel {
     private RepoRepository repository;
-    private LiveData<PagedList<RepoAndAllissues>> issues;
 
     public KanbanViewModel(@NonNull Application application) {
         super(application);

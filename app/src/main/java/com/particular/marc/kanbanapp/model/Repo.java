@@ -29,6 +29,8 @@ public class Repo {
     @Expose(serialize = false, deserialize = false)
     private boolean hasKanban = false;
 
+    private int lastPage;
+
     @Ignore
     public Repo(int id, String fullName, int issuesCount) {
         this.id = id;
@@ -69,5 +71,19 @@ public class Repo {
 
     public void setHasKanban(boolean hasKanban) {
         this.hasKanban = hasKanban;
+    }
+
+    public int getLastPage() { return lastPage; }
+
+    public void setLastPage(int lastPage) { this.lastPage = lastPage; }
+
+    @Override
+    public String toString() {
+        return "Repo{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", issuesCount=" + issuesCount +
+                ", hasKanban=" + hasKanban +
+                '}';
     }
 }

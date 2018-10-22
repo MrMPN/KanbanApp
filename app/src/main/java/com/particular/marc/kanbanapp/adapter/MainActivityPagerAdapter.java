@@ -1,4 +1,4 @@
-package com.particular.marc.kanbanapp;
+package com.particular.marc.kanbanapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.particular.marc.kanbanapp.R;
 import com.particular.marc.kanbanapp.fragments.ExploreFragment;
 import com.particular.marc.kanbanapp.fragments.LocalFragment;
 
@@ -17,7 +18,7 @@ public class MainActivityPagerAdapter extends FragmentPagerAdapter {
     private final int PAGE_COUNT = 2;
     private Context context;
 
-    MainActivityPagerAdapter(FragmentManager fm, Context context) {
+    public MainActivityPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }

@@ -1,4 +1,4 @@
-package com.particular.marc.kanbanapp;
+package com.particular.marc.kanbanapp.adapter;
 
 import android.arch.paging.PagedListAdapter;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.particular.marc.kanbanapp.R;
 import com.particular.marc.kanbanapp.model.Issue;
 
 /**

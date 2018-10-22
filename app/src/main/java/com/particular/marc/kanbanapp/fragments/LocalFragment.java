@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 
 import com.particular.marc.kanbanapp.KanbanActivity;
 import com.particular.marc.kanbanapp.R;
-import com.particular.marc.kanbanapp.adapter.RepoListAdapter;
-import com.particular.marc.kanbanapp.adapter.RepoListAdapter.ListItemClickListener;
+import com.particular.marc.kanbanapp.adapter.MainListAdapter;
+import com.particular.marc.kanbanapp.adapter.MainListAdapter.ListItemClickListener;
 import com.particular.marc.kanbanapp.model.Repo;
 import com.particular.marc.kanbanapp.viewmodel.MainViewModel;
 
@@ -30,7 +30,7 @@ import com.particular.marc.kanbanapp.viewmodel.MainViewModel;
 public class LocalFragment extends Fragment implements ListItemClickListener {
     private static final String TAG = "LocalFragment";
     private MainViewModel viewModel;
-    private RepoListAdapter adapter;
+    private MainListAdapter adapter;
     final public static String REPO_ID = "repoId";
     final public static String REPO_NAME = "repoName";
 
@@ -50,7 +50,7 @@ public class LocalFragment extends Fragment implements ListItemClickListener {
     private void setRecyclerView(View v){
         RecyclerView recyclerView = v.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new RepoListAdapter(getContext(), this, RepoListAdapter.LOCAL);
+        adapter = new MainListAdapter(getContext(), this, MainListAdapter.LOCAL);
         recyclerView.setAdapter(adapter);
     }
 

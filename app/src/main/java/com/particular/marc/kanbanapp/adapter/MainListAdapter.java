@@ -19,8 +19,8 @@ import com.particular.marc.kanbanapp.model.Repo;
 /**
  * PagedListAdapter that will take a PagedList and display it into the RecyclerView
  */
-public class RepoListAdapter extends PagedListAdapter<Repo, RepoListAdapter.ViewHolder> {
-    private static final String TAG = "RepoListAdapter";
+public class MainListAdapter extends PagedListAdapter<Repo, MainListAdapter.ViewHolder> {
+    private static final String TAG = "MainListAdapter";
     final public static int EXPLORE = 0;
     final public static int LOCAL = 1;
     final private ListItemClickListener mOnClickListener;
@@ -32,7 +32,7 @@ public class RepoListAdapter extends PagedListAdapter<Repo, RepoListAdapter.View
         void onListItemClick(Repo clickedItem);
     }
 
-    public RepoListAdapter(Context context, ListItemClickListener listener, int page) {
+    public MainListAdapter(Context context, ListItemClickListener listener, int page) {
         super(DIFF_CALLBACK);
         mOnClickListener = listener;
         this.page = page;
